@@ -1,924 +1,304 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Adem'in Backrooms'u</title>
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #0b0f19;
-            color: white;
-        }
-
-
-        /* =========================
-           AÇILIŞ EKRANI
-        ========================= */
-
-        #welcome {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-
-            background:
-                radial-gradient(circle at center,
-                #292300 0%,
-                #111111 45%,
-                #050505 100%);
-
-            transition: opacity 1s ease;
-        }
-
-        .welcome-box {
-            padding: 30px;
-        }
-
-        .welcome-box h1 {
-            font-size: 48px;
-            color: #ffe600;
-
-            text-shadow:
-                0 0 10px #ffe600,
-                0 0 30px rgba(255,230,0,0.5);
-
-            margin-bottom: 35px;
-
-            animation: glow 2s infinite alternate;
-        }
-
-        @keyframes glow {
-
-            from {
-                text-shadow:
-                    0 0 5px #ffe600;
-            }
-
-            to {
-                text-shadow:
-                    0 0 15px #ffe600,
-                    0 0 40px rgba(255,230,0,0.7);
-            }
-
-        }
-
-
-        /* SARI BUTON */
-
-        .enter-button {
-            border: none;
-
-            background: #ffe600;
-            color: #111;
-
-            font-size: 18px;
-            font-weight: bold;
-
-            padding: 16px 40px;
-
-            border-radius: 8px;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 0 10px rgba(255,230,0,0.5);
-
-            transition: 0.3s;
-        }
-
-        .enter-button:hover {
-
-            transform: scale(1.08);
-
-            box-shadow:
-                0 0 20px #ffe600,
-                0 0 40px rgba(255,230,0,0.5);
-        }
-
-
-        /* =========================
-           MENÜ
-        ========================= */
-
-        header {
-
-            position: fixed;
-            top: 0;
-            left: 0;
-
-            width: 100%;
-
-            background: rgba(8,12,20,0.95);
-
-            border-bottom: 1px solid #252b3a;
-
-            z-index: 1000;
-        }
-
-        nav {
-
-            max-width: 1100px;
-
-            height: 70px;
-
-            margin: auto;
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            padding: 0 20px;
-        }
-
-        .logo {
-
-            color: #ffe600;
-
-            font-size: 22px;
-
-            font-weight: bold;
-        }
-
-        nav ul {
-
-            display: flex;
-
-            list-style: none;
-
-            gap: 30px;
-        }
-
-        nav ul li a {
-
-            color: white;
-
-            text-decoration: none;
-
-            transition: 0.3s;
-        }
-
-        nav ul li a:hover {
-
-            color: #ffe600;
-        }
-
-
-        /* =========================
-           ANA SAYFA
-        ========================= */
-
-        .hero {
-
-            min-height: 100vh;
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            text-align: center;
-
-            padding: 100px 20px;
-
-            background:
-
-                radial-gradient(
-                    circle at center,
-                    #1b2335,
-                    #080b12
-                );
-        }
-
-        .hero h1 {
-
-            font-size: 60px;
-
-            margin-bottom: 15px;
-
-            color: white;
-        }
-
-        .hero h1 span {
-
-            color: #ffe600;
-        }
-
-        .hero h2 {
-
-            font-size: 24px;
-
-            color: #aab3c5;
-
-            margin-bottom: 25px;
-        }
-
-        .hero p {
-
-            max-width: 700px;
-
-            margin: auto;
-
-            color: #c5cad4;
-
-            font-size: 18px;
-
-            line-height: 1.8;
-        }
-
-
-        /* =========================
-           GENEL BÖLÜM
-        ========================= */
-
-        section {
-
-            max-width: 1100px;
-
-            margin: auto;
-
-            padding: 100px 20px;
-        }
-
-        .section-title {
-
-            text-align: center;
-
-            font-size: 38px;
-
-            margin-bottom: 50px;
-
-            color: #ffe600;
-        }
-
-
-        /* =========================
-           ÖZGEÇMİŞ
-        ========================= */
-
-        .cv-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 25px;
-        }
-
-        .card {
-
-            background: #111722;
-
-            border: 1px solid #252d3d;
-
-            border-radius: 12px;
-
-            padding: 30px;
-
-            transition: 0.3s;
-        }
-
-        .card:hover {
-
-            transform: translateY(-5px);
-
-            border-color: #ffe600;
-        }
-
-        .card h3 {
-
-            color: #ffe600;
-
-            margin-bottom: 15px;
-
-            font-size: 22px;
-        }
-
-        .card p,
-        .card li {
-
-            color: #bfc6d4;
-
-            line-height: 1.8;
-        }
-
-        .card ul {
-
-            padding-left: 20px;
-        }
-
-
-        /* =========================
-           PROJELER
-        ========================= */
-
-        .projects {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 25px;
-        }
-
-        .project {
-
-            background: #111722;
-
-            border: 1px solid #252d3d;
-
-            border-radius: 12px;
-
-            padding: 30px;
-
-            transition: 0.3s;
-        }
-
-        .project:hover {
-
-            transform: translateY(-8px);
-
-            border-color: #ffe600;
-        }
-
-        .project h3 {
-
-            color: #ffe600;
-
-            margin-bottom: 15px;
-        }
-
-        .project p {
-
-            color: #bfc6d4;
-
-            line-height: 1.7;
-        }
-
-        .tag {
-
-            display: inline-block;
-
-            margin-top: 20px;
-
-            margin-right: 5px;
-
-            padding: 6px 10px;
-
-            background: #252b19;
-
-            color: #ffe600;
-
-            border-radius: 5px;
-
-            font-size: 13px;
-        }
-
-
-        /* =========================
-           İLETİŞİM
-        ========================= */
-
-        .contact {
-
-            max-width: 700px;
-
-            margin: auto;
-        }
-
-        .contact-item {
-
-            background: #111722;
-
-            border: 1px solid #252d3d;
-
-            padding: 22px;
-
-            margin-bottom: 15px;
-
-            border-radius: 10px;
-        }
-
-        .contact-item strong {
-
-            display: block;
-
-            color: #ffe600;
-
-            margin-bottom: 7px;
-        }
-
-        .contact-item a {
-
-            color: white;
-
-            text-decoration: none;
-        }
-
-
-        /* =========================
-           FOOTER
-        ========================= */
-
-        footer {
-
-            text-align: center;
-
-            padding: 30px;
-
-            background: #05070c;
-
-            color: #737b8c;
-        }
-
-
-        /* =========================
-           TELEFON
-        ========================= */
-
-        @media (max-width: 800px) {
-
-            nav {
-
-                height: auto;
-
-                flex-direction: column;
-
-                gap: 15px;
-
-                padding: 15px;
-            }
-
-            nav ul {
-
-                gap: 15px;
-
-                flex-wrap: wrap;
-
-                justify-content: center;
-            }
-
-            .hero h1 {
-
-                font-size: 42px;
-            }
-
-            .welcome-box h1 {
-
-                font-size: 35px;
-            }
-
-            .cv-grid,
-            .projects {
-
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adem'in Backrooms'u</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+}
+
+#welcome {
+    position: fixed;
+    inset: 0;
+    background: #d6c94f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+    text-align: center;
+}
+
+#welcome h1 {
+    color: #222;
+    font-size: 42px;
+    margin-bottom: 35px;
+    text-shadow: 2px 2px 5px #777;
+}
+
+.enter-button {
+    padding: 18px 40px;
+    font-size: 22px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: #ffe600;
+    color: #111;
+    cursor: pointer;
+    box-shadow: 0 0 25px #fff000;
+}
+
+.enter-button:hover {
+    transform: scale(1.08);
+}
+
+#troll {
+    position: fixed;
+    inset: 0;
+    background: #050505;
+    color: #00ff00;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9998;
+    text-align: center;
+    font-family: monospace;
+}
+
+#troll h2 {
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+#trollText {
+    font-size: 20px;
+    min-height: 30px;
+}
+
+.loading {
+    width: 300px;
+    height: 20px;
+    border: 2px solid #00ff00;
+    margin-top: 25px;
+}
+
+.loading-bar {
+    height: 100%;
+    width: 0%;
+    background: #00ff00;
+}
+
+header {
+    background: #222;
+    padding: 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+section {
+    padding: 70px 10%;
+    min-height: 400px;
+}
+
+.hero {
+    text-align: center;
+    background: linear-gradient(#333, #111);
+}
+
+.hero h1 {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.card {
+    background: #222;
+    padding: 25px;
+    margin: 20px 0;
+    border-radius: 12px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #000;
+}
+
+@media (max-width: 600px) {
+    #welcome h1 {
+        font-size: 30px;
+    }
+
+    .enter-button {
+        font-size: 18px;
+        padding: 15px 30px;
+    }
+
+    nav a {
+        display: block;
+        margin: 10px;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
-
-<!-- ==================================
-     AÇILIŞ
-================================== -->
-
 <div id="welcome">
+    <h1>Adem'in Backrooms'una<br>Hoş Geldiniz</h1>
 
-    <div class="welcome-box">
-
-        <h1>
-            Adem'in Backrooms'una<br>
-            Hoş Geldiniz
-        </h1>
-
-        <button
-            class="enter-button"
-            onclick="enterSite()">
-
-            Sarı Butona Bas
-
-        </button>
-
-    </div>
-
+    <button class="enter-button" onclick="startTroll()">
+        Sarı Butona Bas
+    </button>
 </div>
 
+<div id="troll">
+    <h2 id="trollTitle">SİSTEM TARANIYOR...</h2>
 
-<!-- ==================================
-     MENÜ
-================================== -->
+    <div id="trollText">
+        Lütfen bekleyin...
+    </div>
+
+    <div class="loading">
+        <div class="loading-bar" id="bar"></div>
+    </div>
+</div>
 
 <header>
+    <h2>Adem'in Backrooms'u</h2>
 
     <nav>
-
-        <div class="logo">
-            Adem'in Backrooms'u
-        </div>
-
-        <ul>
-
-            <li>
-                <a href="#anasayfa">
-                    Ana Sayfa
-                </a>
-            </li>
-
-            <li>
-                <a href="#ozgecmis">
-                    Özgeçmiş
-                </a>
-            </li>
-
-            <li>
-                <a href="#projeler">
-                    Projeler
-                </a>
-            </li>
-
-            <li>
-                <a href="#iletisim">
-                    İletişim
-                </a>
-            </li>
-
-        </ul>
-
+        <a href="#anasayfa">Ana Sayfa</a>
+        <a href="#ozgecmis">Özgeçmiş</a>
+        <a href="#projeler">Projeler</a>
+        <a href="#iletisim">İletişim</a>
     </nav>
-
 </header>
 
-
-<!-- ==================================
-     ANA SAYFA
-================================== -->
-
-<section
-    class="hero"
-    id="anasayfa">
-
-    <div>
-
-        <h1>
-            Merhaba, ben
-            <span>Adem</span>
-        </h1>
-
-        <h2>
-            Bilişim Teknolojileri
-        </h2>
-
-        <p>
-
-            Teknolojiye, bilgisayarlara ve yeni
-            projeler geliştirmeye ilgi duyuyorum.
-
-            Bu site benim kişisel alanım ve
-            çalışmalarımı burada paylaşıyorum.
-
-        </p>
-
-    </div>
-
+<section id="anasayfa" class="hero">
+    <h1>Merhaba, ben Adem 👋</h1>
+    <p>Bilişim Teknolojileri</p>
+    <p>Backrooms'a hoş geldin...</p>
 </section>
-
-
-<!-- ==================================
-     ÖZGEÇMİŞ
-================================== -->
 
 <section id="ozgecmis">
+    <h2>Özgeçmiş</h2>
 
-    <h2 class="section-title">
-        Özgeçmiş
-    </h2>
-
-    <div class="cv-grid">
-
-
-        <div class="card">
-
-            <h3>
-                Hakkımda
-            </h3>
-
-            <p>
-
-                Bilişim Teknolojileri alanında
-                eğitim aldım.
-
-                Bilgisayar sistemleri, donanım,
-                yazılım ve teknoloji alanlarında
-                kendimi geliştirmeye devam ediyorum.
-
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>
-                Eğitim
-            </h3>
-
-            <ul>
-
-                <li>
-                    Turgay Ciner Mesleki ve Teknik
-                    Anadolu Lisesi
-                </li>
-
-                <li>
-                    Bilişim Teknolojileri
-                </li>
-
-                <li>
-                    Veritabanı Programcılığı
-                </li>
-
-            </ul>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>
-                Yetenekler
-            </h3>
-
-            <ul>
-
-                <li>
-                    Bilgisayar kullanımı
-                </li>
-
-                <li>
-                    Donanım
-                </li>
-
-                <li>
-                    Teknik destek
-                </li>
-
-                <li>
-                    HTML / CSS
-                </li>
-
-                <li>
-                    Veritabanı
-                </li>
-
-            </ul>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>
-                Deneyim
-            </h3>
-
-            <p>
-
-                Bilgi işlem ve teknik destek
-                alanlarında deneyim kazanıyorum.
-
-                Bilgisayar, yazıcı ve çeşitli
-                teknolojik cihazlarla çalışıyorum.
-
-            </p>
-
-        </div>
-
-
+    <div class="card">
+        <h3>Hakkımda</h3>
+        <p>
+            Bilişim Teknolojileri alanında kendimi geliştirmeye
+            devam ediyorum.
+        </p>
     </div>
 
+    <div class="card">
+        <h3>Eğitim</h3>
+        <p>Bilişim Teknolojileri / Veritabanı</p>
+    </div>
+
+    <div class="card">
+        <h3>Yetenekler</h3>
+        <p>HTML • CSS • JavaScript • Veritabanı</p>
+    </div>
 </section>
-
-
-<!-- ==================================
-     PROJELER
-================================== -->
 
 <section id="projeler">
+    <h2>Projeler</h2>
 
-    <h2 class="section-title">
-        Projeler
-    </h2>
-
-    <div class="projects">
-
-
-        <div class="project">
-
-            <h3>
-                Kişisel Web Sitesi
-            </h3>
-
-            <p>
-
-                Kişisel bilgilerimi,
-                özgeçmişimi ve projelerimi
-                sergilemek için hazırladığım
-                web sitesi.
-
-            </p>
-
-            <span class="tag">
-                HTML
-            </span>
-
-            <span class="tag">
-                CSS
-            </span>
-
-        </div>
-
-
-        <div class="project">
-
-            <h3>
-                Veritabanı Projesi
-            </h3>
-
-            <p>
-
-                Veritabanı oluşturma,
-                veri yönetimi ve sorgulama
-                mantığını geliştirmek için
-                hazırlanan proje.
-
-            </p>
-
-            <span class="tag">
-                SQL
-            </span>
-
-            <span class="tag">
-                Veritabanı
-            </span>
-
-        </div>
-
-
-        <div class="project">
-
-            <h3>
-                Teknik Destek
-            </h3>
-
-            <p>
-
-                Bilgisayar, yazıcı ve çevre
-                birimleriyle ilgili teknik
-                sorunların çözümüne yönelik
-                çalışmalar.
-
-            </p>
-
-            <span class="tag">
-                Donanım
-            </span>
-
-            <span class="tag">
-                Teknik Destek
-            </span>
-
-        </div>
-
-
+    <div class="card">
+        <h3>Kişisel Web Sitesi</h3>
+        <p>Bu site 😎</p>
     </div>
 
+    <div class="card">
+        <h3>Veritabanı Projesi</h3>
+        <p>Veritabanı çalışmaları.</p>
+    </div>
+
+    <div class="card">
+        <h3>Teknik Destek</h3>
+        <p>Bilgisayar ve teknoloji üzerine çalışmalar.</p>
+    </div>
 </section>
-
-
-<!-- ==================================
-     İLETİŞİM
-================================== -->
 
 <section id="iletisim">
+    <h2>İletişim</h2>
 
-    <h2 class="section-title">
-        İletişim
-    </h2>
-
-    <div class="contact">
-
-
-        <div class="contact-item">
-
-            <strong>
-                Ad Soyad
-            </strong>
-
-            Adem Biçici
-
-        </div>
-
-
-        <div class="contact-item">
-
-            <strong>
-                E-posta
-            </strong>
-
-            <a href="mailto:mail@ornek.com">
-                mail@ornek.com
-            </a>
-
-        </div>
-
-
-        <div class="contact-item">
-
-            <strong>
-                Telefon
-            </strong>
-
-            <a href="tel:+905000000000">
-                +90 500 000 00 00
-            </a>
-
-        </div>
-
-
-        <div class="contact-item">
-
-            <strong>
-                Konum
-            </strong>
-
-            Kahramanmaraş / Türkiye
-
-        </div>
-
-
+    <div class="card">
+        <p>📧 E-posta: ornek@mail.com</p>
+        <p>📱 Telefon: 05XX XXX XX XX</p>
+        <p>📍 Konum: Türkiye</p>
     </div>
-
 </section>
 
-
-<!-- ==================================
-     ALT BİLGİ
-================================== -->
-
 <footer>
-
     © 2026 Adem'in Backrooms'u
-
 </footer>
-
-
-<!-- ==================================
-     JAVASCRIPT
-================================== -->
 
 <script>
 
-function enterSite() {
+function startTroll() {
 
-    const welcome =
-        document.getElementById("welcome");
+    document.getElementById("welcome").style.display = "none";
+    document.getElementById("troll").style.display = "flex";
 
-    welcome.style.opacity = "0";
+    let bar = document.getElementById("bar");
+    let text = document.getElementById("trollText");
+    let title = document.getElementById("trollTitle");
 
-    setTimeout(function() {
+    let progress = 0;
 
-        welcome.style.display = "none";
+    let messages = [
+        "Sistem taranıyor...",
+        "Backrooms bağlantısı kuruluyor...",
+        "Kullanıcı tespit edildi...",
+        "Telefonunuz kontrol ediliyor...",
+        "Dosyalar inceleniyor...",
+        "Şifreler kontrol ediliyor...",
+        "Son aşama..."
+    ];
 
-    }, 1000);
+    let messageIndex = 0;
 
+    let interval = setInterval(function() {
+
+        progress += 5;
+
+        bar.style.width = progress + "%";
+
+        if (progress % 15 === 0 && messageIndex < messages.length) {
+            text.innerText = messages[messageIndex];
+            messageIndex++;
+        }
+
+        if (progress >= 100) {
+
+            clearInterval(interval);
+
+            title.innerText = "😂 YAKALANDIN!";
+            text.innerText =
+                "Şaka yaptık! Telefonunuzda hiçbir şey yapılmadı. 😎";
+
+            bar.style.display = "none";
+
+            setTimeout(function() {
+                document.getElementById("troll").style.display = "none";
+            }, 3000);
+        }
+
+    }, 180);
 }
 
 </script>
-
 
 </body>
 </html>
